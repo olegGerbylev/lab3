@@ -1,10 +1,15 @@
 public class Domino {
-    int side1;
-    int side2;
-
+    private int side1;
     public Domino(int side1) {
         this.side1 = side1;
-        this.side2 = -1;
+    }
+
+    public int getSide1() {
+        return side1;
+    }
+
+    public void setSide1(int side1) {
+        this.side1 = side1;
     }
 
     @Override

@@ -7,12 +7,15 @@ public class MainClass {
         int N = 5;
 
         DominoSet dominoSet = new DominoSet();
-        System.out.println("Initial set: " + dominoSet);
+        dominoSet.printFirstDominoSet();
+        DominoSequence dominoSequence = new DominoSequence(dominoSet);
+        System.out.println(dominoSequence.print());
+        dominoSequence.removeEveryNthDomino(N);
 
-        DominoSequence sequence = new DominoSequence(dominoSet);
-        System.out.println(sequence.print());
-
-        sequence.removeEveryNthDomino(N);
+//        DominoSequence sequence = new DominoSequence(dominoSet);
+//        System.out.println(sequence.print());
+//
+//        sequence.removeEveryNthDomino(N);
 
     }
 }

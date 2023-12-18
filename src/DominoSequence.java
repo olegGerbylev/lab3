@@ -1,21 +1,14 @@
 public class DominoSequence {
-    Domino[] sequence = new Domino[28];
-    int length = 28;
+    private int length = 28;
+    Domino[] sequence;
 
     public DominoSequence(DominoSet set) {
-        int i = 0;
-        while (i <= 27){
+        int i;
+        for(i = 0; i < 28; i++ ){
             Domino currentDomini = set.getDomino();
-            if(i == 0){
-                currentDomini.side2 = currentDomini.side1;
-                this.sequence[0] = currentDomini;
-            }else {
-                sequence[i-1].side2 = currentDomini.side1;
-                currentDomini.side2 = sequence[0].side1;
-                this.sequence[i] = currentDomini;
-            }
-            i++;
+            set.setDominoes(i, currentDomini);
         }
+        this.sequence = set.getDominoes();
     }
 
     public void removeEveryNthDomino(int N) {
@@ -23,12 +16,12 @@ public class DominoSequence {
         int remaining = length;
         int stepCount = 0; // Счетчик шагов
 
-        while (remaining > 0) {
-            if (sequence[current].side1 != -1) {
+        while (remaining != 0) {
+            if (sequence[current].getSide1() != -1) {
                 if (++stepCount == N) {
                     System.out.println("Removing: " + sequence[current]);
-                    sequence[current].side1 = -1;
-                    stepCount = 0; // Сброс счетчика шагов
+                    sequence[current].setSide1(-1);
+                    stepCount = 0;
                     remaining--;
                     System.out.println(this.print());
                 }
@@ -40,7 +33,7 @@ public class DominoSequence {
     public String print() {
         String str = "";
         for (Domino domino: sequence){
-            if (domino.side1 != -1) {
+            if (domino.getSide1() != -1) {
                 str += " " + domino;
             }
         }
