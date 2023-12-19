@@ -1,19 +1,28 @@
 public class Domino {
-    private int side1;
+    private int currentValue;
+    private int nextValue = -1;
     public Domino(int side1) {
-        this.side1 = side1;
+        this.currentValue = side1;
     }
 
-    public int getSide1() {
-        return side1;
+    public void setCurrentValue(int currentValue) {
+        this.currentValue = currentValue;
     }
 
-    public void setSide1(int side1) {
-        this.side1 = side1;
+    public int getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setNextValue(int nextValue) {
+        this.nextValue = nextValue;
+    }
+
+    public int getNextValue() {
+        return nextValue;
     }
 
     @Override
     public String toString() {
-        return side1 / 4 + "|" + (side1 % 4 + side1 / 4) % 7;
+        return currentValue / 4 + "|" + (currentValue % 4 + currentValue / 4) % 7;
     }
 }

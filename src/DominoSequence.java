@@ -1,39 +1,49 @@
 public class DominoSequence {
     private int length = 28;
-    Domino[] sequence;
+    private Domino[] sequence;
+    private DominoSet set;
 
     public DominoSequence(DominoSet set) {
         int i;
+        sequence = set.getDominoes();
         for(i = 0; i < 28; i++ ){
             Domino currentDomini = set.getDomino();
-            set.setDominoes(i, currentDomini);
+            if(i == 0){
+                currentDomini.setNextValue(currentDomini.getCurrentValue());
+                this.sequence[0] = currentDomini;
+            }else {
+                sequence[i-1].setNextValue(currentDomini.getCurrentValue());
+                currentDomini.setNextValue(sequence[0].getCurrentValue());
+                this.sequence[i] = currentDomini;
+            }
         }
-        this.sequence = set.getDominoes();
+        this.set = set;
     }
 
     public void removeEveryNthDomino(int N) {
-        int current = 0;
-        int remaining = length;
-        int stepCount = 0; // Счетчик шагов
-
+        int remaining = sequence.length;
+        int stepCount = 0;
+        Domino lastDomino = sequence[27];
         while (remaining != 0) {
-            if (sequence[current].getSide1() != -1) {
-                if (++stepCount == N) {
-                    System.out.println("Removing: " + sequence[current]);
-                    sequence[current].setSide1(-1);
-                    stepCount = 0;
-                    remaining--;
-                    System.out.println(this.print());
-                }
+            Domino currentDomino = set.NextDomino(lastDomino.getCurrentValue());
+            if (++stepCount == N){
+                System.out.println("del: "+ currentDomino);
+                lastDomino.setNextValue(currentDomino.getNextValue());
+                currentDomino.setCurrentValue(-1);
+                remaining--;
+                stepCount=0;
+                System.out.println(print());
+            }else {
+                lastDomino = currentDomino;
             }
-            current = (current + 1) % length;
+
         }
     }
 
     public String print() {
         String str = "";
         for (Domino domino: sequence){
-            if (domino.getSide1() != -1) {
+            if (domino.getCurrentValue() != -1) {
                 str += " " + domino;
             }
         }

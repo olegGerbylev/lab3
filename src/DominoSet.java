@@ -5,12 +5,18 @@ public class DominoSet {
     private Domino[] dominoes = new Domino[28];
     private Random random = new Random();
 
-    public void setDominoes(int i, Domino dominoes) {
-        this.dominoes[i] = dominoes;
-    }
-
     public Domino[] getDominoes() {
         return dominoes;
+    }
+
+    public Domino NextDomino(int i){
+        int j = 0;
+        int nextValue = -2;
+        while (true){
+            if (dominoes[j].getCurrentValue() == i) nextValue = dominoes[j].getNextValue();
+            if(dominoes[j].getCurrentValue() == nextValue) return dominoes[j];
+            j = (j + 1) % dominoes.length;
+        }
     }
 
     public void printFirstDominoSet(){
@@ -33,12 +39,11 @@ public class DominoSet {
         while (true) {
             int currentIndexDomino = random.nextInt(28);
             for (int i =0; i < dominoes.length; i++) {
-                if (dominoes[i] != null && dominoes[i].getSide1() == currentIndexDomino) break;
+                if (dominoes[i] != null && dominoes[i].getCurrentValue() == currentIndexDomino) break;
                 if(i == 27){
                     return new Domino(currentIndexDomino);
                 }
             }
         }
     }
-
 }
