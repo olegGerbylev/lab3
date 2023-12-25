@@ -7,14 +7,10 @@ public class MainClass {
         int N = 5;
 
         DominoSet dominoSet = new DominoSet();
-        for(int i = 0; i < 28; i++){
-            dominoSet.addDomino();
-        }
+        DominoSeq dominoSeq = new DominoSeq(N, dominoSet);
+        dominoSeq.createSeq();
         dominoSet.printShuffledArray();
-        Integer currentIndex = -1;
-        for(int j = 0; j < 28; j++){
-            currentIndex = dominoSet.deleteDomino(N, currentIndex);
-        }
+        dominoSeq.deleteDomino();
 
     }
 }
