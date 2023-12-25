@@ -7,15 +7,14 @@ public class MainClass {
         int N = 5;
 
         DominoSet dominoSet = new DominoSet();
-        dominoSet.printFirstDominoSet();
-        DominoSequence dominoSequence = new DominoSequence(dominoSet);
-        System.out.println(dominoSequence.print());
-        dominoSequence.removeEveryNthDomino(N);
-
-//        DominoSequence sequence = new DominoSequence(dominoSet);
-//        System.out.println(sequence.print());
-//
-//        sequence.removeEveryNthDomino(N);
+        for(int i = 0; i < 28; i++){
+            dominoSet.addDomino();
+        }
+        dominoSet.printShuffledArray();
+        Integer currentIndex = -1;
+        for(int j = 0; j < 28; j++){
+            currentIndex = dominoSet.deleteDomino(N, currentIndex);
+        }
 
     }
 }

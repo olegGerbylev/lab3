@@ -1,49 +1,85 @@
-import javax.annotation.processing.SupportedSourceVersion;
 import java.util.Random;
 
 public class DominoSet {
     private Domino[] dominoes = new Domino[28];
     private Random random = new Random();
+    private Integer end;
+    private Integer start;
 
-    public Domino[] getDominoes() {
-        return dominoes;
+    DominoSet(){
+        for (int i = 0; i < dominoes.length;i++){
+            dominoes[i] = new Domino(i);
+        }
+        print();
+    }
+    public void addDomino(){
+        Domino randomDomino = this.getDomino();
+        if (this.start == null){
+            randomDomino.setNextValue(randomDomino.getCurrentValue());
+            this.start = randomDomino.getCurrentValue();
+            this.end = randomDomino.getCurrentValue();
+            return;
+        }
+        dominoes[end].setNextValue(randomDomino.getCurrentValue());
+        randomDomino.setNextValue(start);
+        end = randomDomino.getCurrentValue();
     }
 
-    public Domino NextDomino(int i){
-        int j = 0;
-        int nextValue = -2;
-        while (true){
-            if (dominoes[j].getCurrentValue() == i) nextValue = dominoes[j].getNextValue();
-            if(dominoes[j].getCurrentValue() == nextValue) return dominoes[j];
-            j = (j + 1) % dominoes.length;
+    public Integer deleteDomino(Integer N, Integer currentDominoPosition){
+        if(currentDominoPosition == -1){
+            currentDominoPosition = start;
         }
-    }
-
-    public void printFirstDominoSet(){
-        String str = "";
-        for (int i = 0; i < 28; i++) {
-            str = str + " " + new Domino(i);
+        int step = 0;
+        int nextPosition, lastPosition = currentDominoPosition;
+        while (step < N){
+            if (++step == N){
+                nextPosition = dominoes[currentDominoPosition].getNextValue();
+                dominoes[lastPosition].setNextValue(nextPosition);
+                if(start == end){
+                    System.out.println(dominoes[currentDominoPosition]);
+                    return nextPosition;
+                }
+                if (currentDominoPosition == start){
+                    start = nextPosition;
+                }
+                if(currentDominoPosition == end){
+                    end = lastPosition;
+                }
+                System.out.println(dominoes[currentDominoPosition]);
+                printShuffledArray();
+                return nextPosition;
+            }
+            nextPosition = dominoes[currentDominoPosition].getNextValue();
+            lastPosition = currentDominoPosition;
+            currentDominoPosition = nextPosition;
         }
-        System.out.println(str);
-    }
-    @Override
-    public String toString(){
-        String str = "";
-        for (Domino domino : dominoes){
-            str = str + " " + domino.toString();
-        }
-        return str;
+        return -9;
     }
 
     public Domino getDomino(){
         while (true) {
             int currentIndexDomino = random.nextInt(28);
-            for (int i =0; i < dominoes.length; i++) {
-                if (dominoes[i] != null && dominoes[i].getCurrentValue() == currentIndexDomino) break;
-                if(i == 27){
-                    return new Domino(currentIndexDomino);
-                }
+            if (dominoes[currentIndexDomino].getNextValue() < 0){
+                return dominoes[currentIndexDomino];
             }
         }
+    }
+
+    public void print(){
+        String str = "";
+        for(Domino domino: dominoes){
+            str = str + " " + domino;
+        }
+        System.out.println(str);
+    }
+    public void printShuffledArray(){
+        String str = "";
+        Domino currentDomino = dominoes[start];
+        while (currentDomino != dominoes[end]){
+            str = str + " " + currentDomino;
+            currentDomino = dominoes[currentDomino.getNextValue()];
+        }
+        str = str + " " + currentDomino;
+        System.out.println(str);
     }
 }
