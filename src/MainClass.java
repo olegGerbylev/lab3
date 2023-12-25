@@ -7,10 +7,9 @@ public class MainClass {
         int N = 5;
 
         DominoSet dominoSet = new DominoSet();
-        DominoSeq dominoSeq = new DominoSeq(N, dominoSet);
-        dominoSeq.createSeq();
+        DominoSeq dominoSeq = new DominoSeq(dominoSet);
         dominoSet.printShuffledArray();
-        dominoSeq.deleteDomino();
+        dominoSeq.deleteDomino(N, dominoSet);
 
     }
 }
