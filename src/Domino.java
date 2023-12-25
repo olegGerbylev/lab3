@@ -5,10 +5,6 @@ public class Domino {
         this.currentValue = side1;
     }
 
-    public void setCurrentValue(int currentValue) {
-        this.currentValue = currentValue;
-    }
-
     public int getCurrentValue() {
         return currentValue;
     }
