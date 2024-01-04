@@ -8,8 +8,15 @@ public class MainClass {
 
         DominoSet dominoSet = new DominoSet();
         DominoSeq dominoSeq = new DominoSeq(dominoSet);
-        dominoSet.printShuffledArray();
-        dominoSeq.deleteDomino(N, dominoSet);
+        for (int i =0; i < 28; i++){
+            dominoSeq.addDomino();
+        }
+        dominoSeq.printShuffledArray();
+        int currentDomino = dominoSeq.getEnd().getCurrentValue();
+        for (int j =0; j < 28; j++){
+            currentDomino = dominoSeq.deleteDomino(N, currentDomino);
+        }
+//        dominoSeq.deleteDomino(N, dominoSet);
 
     }
 }
