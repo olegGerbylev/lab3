@@ -54,14 +54,14 @@ public class DominoSeq {
         }
         Domino deletedDomino = set.deleteDomino(currentDomino,previousDomino);
         System.out.println(deletedDomino);
-        if (deletedDomino == end && deletedDomino == set.getDomino(end.getNextValue())){
+        if (deletedDomino == end && deletedDomino == set.nextDomino(end)){
             return previousDomino.getCurrentValue();
         }
         if (deletedDomino == end){
             previousDomino.setNextValue(end.getNextValue());
             end = previousDomino;
-        } else if (deletedDomino == set.getDomino(end.getNextValue())){
-            end.setNextValue(set.getDomino(end.getNextValue()).getNextValue());
+        } else if (deletedDomino == set.nextDomino(end)){
+            end.setNextValue(set.nextDomino(end).getNextValue());
         }
         printShuffledArray();
         return previousDomino.getCurrentValue();
